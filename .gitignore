@@ -2,6 +2,8 @@
 .idea/
 .vscode/
 
+/.ddev/db.sql.gz
+
 /vendor/
 /web/core/
 /web/modules/contrib/
@@ -22,4 +24,3 @@
 /coverage/
 
 /docs/*.rtf
-

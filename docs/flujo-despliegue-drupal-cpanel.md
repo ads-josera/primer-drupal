@@ -263,6 +263,121 @@ git push
 composer install --no-dev --optimize-autoloader
 ```
 
+## Playbook rapido para este proyecto
+
+Datos de referencia actuales:
+
+- Repo GitHub: `git@github.com:ads-josera/primer-drupal.git`
+- Dominio de prueba: `https://primer-drupal.josera.com.mx`
+- Ruta en servidor: `/home/josera/primer-drupal.josera.com.mx`
+- Drupal root: `/home/josera/primer-drupal.josera.com.mx/web`
+- PHP correcto en servidor: `/opt/cpanel/ea-php84/root/usr/bin/php`
+- Composer en servidor: `/usr/local/bin/composer`
+- Drush del proyecto: `vendor/bin/drush.php`
+
+### Aliases recomendados en el servidor
+
+Agregar al `~/.bashrc` o `~/.bash_profile`:
+
+```bash
+alias php84='/opt/cpanel/ea-php84/root/usr/bin/php'
+alias composer84='php84 /usr/local/bin/composer'
+alias drush84='php84 /home/josera/primer-drupal.josera.com.mx/vendor/bin/drush.php --root=/home/josera/primer-drupal.josera.com.mx/web --uri=https://primer-drupal.josera.com.mx'
+```
+
+Luego recargar la sesion:
+
+```bash
+source ~/.bashrc
+```
+
+### Primer despliegue
+
+```bash
+cd /home/josera/primer-drupal.josera.com.mx
+git clone https://github.com/ads-josera/primer-drupal.git temp-repo
+rsync -av temp-repo/ . --exclude .git
+rm -rf temp-repo
+php84 /usr/local/bin/composer install --no-dev --optimize-autoloader
+mkdir -p web/sites/default/files
+chmod 755 web/sites/default
+chmod 775 web/sites/default/files
+```
+
+Despues:
+
+- importar base de datos
+- configurar `web/sites/default/settings.php`
+- ejecutar `drush84 cr`
+
+### Actualizacion normal de codigo
+
+Flujo local:
+
+```bash
+git status
+git add .
+git commit -m "Describe el cambio"
+git push origin main
+```
+
+Flujo en servidor:
+
+```bash
+cd /home/josera/primer-drupal.josera.com.mx
+git pull origin main
+composer84 install --no-dev --optimize-autoloader
+drush84 cr
+```
+
+### Si cambias configuracion en local
+
+Exportar configuracion en local:
+
+```bash
+ddev exec drush cex -y
+git add .
+git commit -m "Export Drupal config"
+git push origin main
+```
+
+Importar configuracion en servidor:
+
+```bash
+cd /home/josera/primer-drupal.josera.com.mx
+git pull origin main
+composer84 install --no-dev --optimize-autoloader
+drush84 cim -y
+drush84 cr
+```
+
+### Si necesitas mover la base local al servidor otra vez
+
+Local:
+
+```bash
+ddev export-db --file=.ddev/db.sql.gz
+scp -P 22 .ddev/db.sql.gz josera@72.167.47.47:/home/josera/primer-drupal.josera.com.mx/
+```
+
+Servidor:
+
+```bash
+cd /home/josera/primer-drupal.josera.com.mx
+gunzip -c db.sql.gz | mysql -u josera_drupusr -p josera_drupatest
+drush84 cr
+rm -f db.sql.gz
+```
+
+### Checklist corta despues de cada deploy
+
+- abrir `https://primer-drupal.josera.com.mx`
+- revisar login admin
+- probar un formulario
+- correr `drush84 status`
+- correr `drush84 cr` si hace falta
+- revisar `error_log` solo si aparece fallo
+
 ## Siguiente paso para este proyecto
 
 Para `primer-drupal.josera.com.mx`, el siguiente paso operativo es confirmar:

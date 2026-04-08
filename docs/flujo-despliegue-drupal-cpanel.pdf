@@ -4,7 +4,7 @@
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 2 0 obj
-<< /Type /Pages /Count 7 /Kids [10 0 R 11 0 R 12 0 R 13 0 R 14 0 R 15 0 R 16 0 R] >>
+<< /Type /Pages /Count 10 /Kids [13 0 R 14 0 R 15 0 R 16 0 R 17 0 R 18 0 R 19 0 R 20 0 R 21 0 R 22 0 R] >>
 endobj
 3 0 obj
 << /Length 2111 >>
@@ -595,7 +595,7 @@ ET
 endstream
 endobj
 9 0 obj
-<< /Length 1210 >>
+<< /Length 1402 >>
 stream
 BT
 /F1 11 Tf
@@ -660,6 +660,280 @@ BT
 0 -15 Td
 () Tj
 0 -15 Td
+(PLAYBOOK RAPIDO PARA ESTE PROYECTO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Datos de referencia actuales:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* Repo GitHub: git@github.com:ads-josera/primer-drupal.git) Tj
+0 -15 Td
+(* Dominio de prueba: https://primer-drupal.josera.com.mx) Tj
+0 -15 Td
+(* Ruta en servidor: /home/josera/primer-drupal.josera.com.mx) Tj
+0 -15 Td
+(* Drupal root: /home/josera/primer-drupal.josera.com.mx/web) Tj
+0 -15 Td
+(* PHP correcto en servidor: /opt/cpanel/ea-php84/root/usr/bin/php) Tj
+0 -15 Td
+(* Composer en servidor: /usr/local/bin/composer) Tj
+0 -15 Td
+(* Drush del proyecto: vendor/bin/drush.php) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(ALIASES RECOMENDADOS EN EL SERVIDOR) Tj
+0 -15 Td
+() Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Length 1598 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+() Tj
+0 -15 Td
+(Agregar al ~/.bashrc o ~/.bash_profile:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    alias php84='/opt/cpanel/ea-php84/root/usr/bin/php') Tj
+0 -15 Td
+(    alias composer84='php84 /usr/local/bin/composer') Tj
+0 -15 Td
+(    alias drush84='php84 /home/josera/primer-drupal.josera.com.mx/vendor/bin/drush.php) Tj
+0 -15 Td
+(--root=/home/josera/primer-drupal.josera.com.mx/web) Tj
+0 -15 Td
+(--uri=https://primer-drupal.josera.com.mx') Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Luego recargar la sesion:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    source ~/.bashrc) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PRIMER DESPLIEGUE) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    cd /home/josera/primer-drupal.josera.com.mx) Tj
+0 -15 Td
+(    git clone https://github.com/ads-josera/primer-drupal.git temp-repo) Tj
+0 -15 Td
+(    rsync -av temp-repo/ . --exclude .git) Tj
+0 -15 Td
+(    rm -rf temp-repo) Tj
+0 -15 Td
+(    php84 /usr/local/bin/composer install --no-dev --optimize-autoloader) Tj
+0 -15 Td
+(    mkdir -p web/sites/default/files) Tj
+0 -15 Td
+(    chmod 755 web/sites/default) Tj
+0 -15 Td
+(    chmod 775 web/sites/default/files) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Despues:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* importar base de datos) Tj
+0 -15 Td
+(* configurar web/sites/default/settings.php) Tj
+0 -15 Td
+(* ejecutar drush84 cr) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(ACTUALIZACION NORMAL DE CODIGO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Flujo local:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    git status) Tj
+0 -15 Td
+(    git add .) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Length 1458 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+(    git commit -m "Describe el cambio") Tj
+0 -15 Td
+(    git push origin main) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Flujo en servidor:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    cd /home/josera/primer-drupal.josera.com.mx) Tj
+0 -15 Td
+(    git pull origin main) Tj
+0 -15 Td
+(    composer84 install --no-dev --optimize-autoloader) Tj
+0 -15 Td
+(    drush84 cr) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(SI CAMBIAS CONFIGURACION EN LOCAL) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Exportar configuracion en local:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    ddev exec drush cex -y) Tj
+0 -15 Td
+(    git add .) Tj
+0 -15 Td
+(    git commit -m "Export Drupal config") Tj
+0 -15 Td
+(    git push origin main) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Importar configuracion en servidor:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    cd /home/josera/primer-drupal.josera.com.mx) Tj
+0 -15 Td
+(    git pull origin main) Tj
+0 -15 Td
+(    composer84 install --no-dev --optimize-autoloader) Tj
+0 -15 Td
+(    drush84 cim -y) Tj
+0 -15 Td
+(    drush84 cr) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(SI NECESITAS MOVER LA BASE LOCAL AL SERVIDOR OTRA VEZ) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Local:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    ddev export-db --file=.ddev/db.sql.gz) Tj
+0 -15 Td
+(    scp -P 22 .ddev/db.sql.gz) Tj
+0 -15 Td
+(josera@72.167.47.47:/home/josera/primer-drupal.josera.com.mx/) Tj
+0 -15 Td
+() Tj
+ET
+endstream
+endobj
+12 0 obj
+<< /Length 1213 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+() Tj
+0 -15 Td
+(Servidor:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    cd /home/josera/primer-drupal.josera.com.mx) Tj
+0 -15 Td
+(    gunzip -c db.sql.gz | mysql -u josera_drupusr -p josera_drupatest) Tj
+0 -15 Td
+(    drush84 cr) Tj
+0 -15 Td
+(    rm -f db.sql.gz) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(CHECKLIST CORTA DESPUES DE CADA DEPLOY) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* abrir https://primer-drupal.josera.com.mx) Tj
+0 -15 Td
+(* revisar login admin) Tj
+0 -15 Td
+(* probar un formulario) Tj
+0 -15 Td
+(* correr drush84 status) Tj
+0 -15 Td
+(* correr drush84 cr si hace falta) Tj
+0 -15 Td
+(* revisar error_log solo si aparece fallo) Tj
+0 -15 Td
+() Tj
+0 -15 Td
 (SIGUIENTE PASO PARA ESTE PROYECTO) Tj
 0 -15 Td
 () Tj
@@ -684,52 +958,67 @@ BT
 ET
 endstream
 endobj
-10 0 obj
+13 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
 endobj
-11 0 obj
+14 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 4 0 R >>
 endobj
-12 0 obj
+15 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 5 0 R >>
 endobj
-13 0 obj
+16 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 6 0 R >>
 endobj
-14 0 obj
+17 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 7 0 R >>
 endobj
-15 0 obj
+18 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 8 0 R >>
 endobj
-16 0 obj
+19 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 9 0 R >>
 endobj
-17 0 obj
+20 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 10 0 R >>
+endobj
+21 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 11 0 R >>
+endobj
+22 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 12 0 R >>
+endobj
+23 0 obj
 << /Type /Catalog /Pages 2 0 R >>
 endobj
 xref
-0 18
+0 24
 0000000000 65535 f 
 0000000015 00000 n 
 0000000085 00000 n 
-0000000185 00000 n 
-0000002348 00000 n 
-0000003882 00000 n 
-0000005417 00000 n 
-0000006889 00000 n 
-0000008496 00000 n 
-0000010297 00000 n 
-0000011559 00000 n 
-0000011686 00000 n 
-0000011813 00000 n 
-0000011940 00000 n 
-0000012067 00000 n 
-0000012194 00000 n 
-0000012321 00000 n 
-0000012448 00000 n 
+0000000207 00000 n 
+0000002370 00000 n 
+0000003904 00000 n 
+0000005439 00000 n 
+0000006911 00000 n 
+0000008518 00000 n 
+0000010319 00000 n 
+0000011773 00000 n 
+0000013424 00000 n 
+0000014935 00000 n 
+0000016201 00000 n 
+0000016328 00000 n 
+0000016455 00000 n 
+0000016582 00000 n 
+0000016709 00000 n 
+0000016836 00000 n 
+0000016963 00000 n 
+0000017090 00000 n 
+0000017218 00000 n 
+0000017346 00000 n 
+0000017474 00000 n 
 trailer
-<< /Size 18 /Root 17 0 R >>
+<< /Size 24 /Root 23 0 R >>
 startxref
-12498
+17524
 %%EOF
