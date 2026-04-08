@@ -1,0 +1,735 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 7 /Kids [10 0 R 11 0 R 12 0 R 13 0 R 14 0 R 15 0 R 16 0 R] >>
+endobj
+3 0 obj
+<< /Length 2111 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+(FLUJO SEGURO PARA PROYECTOS DRUPAL CON GITHUB, VS CODE Y CPANEL) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Este documento define el flujo que vamos a usar de aqui en adelante para manejar) Tj
+0 -15 Td
+(proyectos Drupal de forma consistente y segura.) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(OBJETIVO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Mantener un proceso repetible para:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* trabajar localmente con Docker o DDEV) Tj
+0 -15 Td
+(* versionar el proyecto con Git) Tj
+0 -15 Td
+(* respaldar el codigo en GitHub) Tj
+0 -15 Td
+(* desplegar de forma controlada a un subdominio o dominio en cPanel) Tj
+0 -15 Td
+(* reducir errores por archivos subidos a mano o cambios no rastreados) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(ESTANDAR QUE VAMOS A SEGUIR SIEMPRE) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(1. El proyecto vive en local y se desarrolla desde VS Code.) Tj
+0 -15 Td
+(2. Todo cambio pasa por Git antes de salir del equipo.) Tj
+0 -15 Td
+(3. El repositorio remoto principal vive en GitHub.) Tj
+0 -15 Td
+(4. Produccion nunca se modifica a mano si el cambio puede hacerse desde Git.) Tj
+0 -15 Td
+(5. El document root del dominio o subdominio debe apuntar al directorio web/ del) Tj
+0 -15 Td
+(   proyecto.) Tj
+0 -15 Td
+(6. La base de datos, variables sensibles y archivos subidos no se guardan en Git.) Tj
+0 -15 Td
+(7. Antes de desplegar, validamos Composer, configuracion y version de PHP.) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(ESTRUCTURA RECOMENDADA PARA DRUPAL) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Este proyecto usa la estructura drupal/recommended-project, asi que:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* la raiz del proyecto contiene composer.json) Tj
+0 -15 Td
+(* el codigo publico vive en web/) Tj
+0 -15 Td
+(* el subdominio en cPanel debe apuntar a algo como public_html/primer-drupal/web) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(QUE NECESITO PARA CONECTAR UN PROYECTO NUEVO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Cuando vayamos a conectar un proyecto a GitHub y dejarlo listo para despliegue,) Tj
+0 -15 Td
+(necesitare lo siguiente:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(1. Nombre del proyecto.) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Length 1482 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+(2. URL del repositorio de GitHub, o confirmacion de que lo crearemos.) Tj
+0 -15 Td
+(3. Dominio o subdominio destino.) Tj
+0 -15 Td
+(4. Document Root del dominio en cPanel.) Tj
+0 -15 Td
+(5. Version de PHP disponible en cPanel.) Tj
+0 -15 Td
+(6. Confirmacion de si el hosting tiene SSH Access o Terminal.) Tj
+0 -15 Td
+(7. Datos de la base de datos:) Tj
+0 -15 Td
+(   - nombre de la base) Tj
+0 -15 Td
+(   - usuario) Tj
+0 -15 Td
+(   - password) Tj
+0 -15 Td
+(   - host, si no es localhost) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(FLUJO DE TRABAJO LOCAL) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(1. PREPARAR EL PROYECTO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Verificar:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* composer.json) Tj
+0 -15 Td
+(* composer.lock) Tj
+0 -15 Td
+(* .gitignore) Tj
+0 -15 Td
+(* configuracion local de Docker o DDEV) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(2. PROBAR EN LOCAL) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Antes de pensar en despliegue:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* el sitio debe levantar) Tj
+0 -15 Td
+(* Drupal debe cargar correctamente) Tj
+0 -15 Td
+(* modulos y dependencias deben instalar sin error) Tj
+0 -15 Td
+(* cualquier cambio importante debe probarse localmente) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(3. GUARDAR CAMBIOS CON GIT) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Flujo base:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    git status) Tj
+0 -15 Td
+(    git add .) Tj
+0 -15 Td
+(    git commit -m "Describe el cambio") Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Length 1483 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+(FLUJO RECOMENDADO CON GITHUB) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(1. CREAR EL REPOSITORIO REMOTO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Crear un repositorio en GitHub con un nombre claro, por ejemplo:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(primer-drupal) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(2. CONECTAR EL PROYECTO LOCAL) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Comandos base:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    git init) Tj
+0 -15 Td
+(    git branch -M main) Tj
+0 -15 Td
+(    git remote add origin git@github.com:TU_USUARIO/TU_REPO.git) Tj
+0 -15 Td
+(    git add .) Tj
+0 -15 Td
+(    git commit -m "Initial project setup") Tj
+0 -15 Td
+(    git push -u origin main) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Si no se usa SSH con GitHub, puede usarse HTTPS.) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(3. REGLA DE TRABAJO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* main representa el estado desplegable) Tj
+0 -15 Td
+(* cambios grandes idealmente van en ramas separadas) Tj
+0 -15 Td
+(* antes de desplegar, main debe estar limpio y probado) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(FLUJO SEGURO DE DESPLIEGUE A CPANEL) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(OPCION RECOMENDADA: CPANEL CON TERMINAL O SSH) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Esta es la opcion que prefiero para todos los proyectos porque permite repetir el) Tj
+0 -15 Td
+(proceso y dejar menos cosas manuales.) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PASO 1. CREAR EL SUBDOMINIO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Length 1420 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+(En cPanel:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* crear el subdominio) Tj
+0 -15 Td
+(* confirmar el Document Root) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Para este tipo de Drupal, el Document Root debe terminar en web.) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Ejemplo:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(public_html/primer-drupal/web) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PASO 2. CONFIGURAR LA VERSION DE PHP) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(En MultiPHP Manager:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* asignar PHP 8.4 si esta disponible) Tj
+0 -15 Td
+(* si no, usar PHP 8.3) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PASO 3. CREAR LA BASE DE DATOS) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(En MySQL Database Wizard o Manage My Databases:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* crear base de datos) Tj
+0 -15 Td
+(* crear usuario) Tj
+0 -15 Td
+(* asignar todos los privilegios) Tj
+0 -15 Td
+(* guardar los datos en un lugar seguro) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PASO 4. SUBIR O CLONAR EL PROYECTO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Hay dos variantes:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(VARIANTE A. GIT EN SERVIDOR) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Si cPanel permite terminal o SSH, el flujo ideal es:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    cd ~) Tj
+0 -15 Td
+(    git clone URL_DEL_REPO public_html/primer-drupal) Tj
+0 -15 Td
+(    cd public_html/primer-drupal) Tj
+0 -15 Td
+(    composer install --no-dev --optimize-autoloader) Tj
+0 -15 Td
+() Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Length 1555 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+() Tj
+0 -15 Td
+(Como este proyecto expone web/, el dominio debe apuntar a:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(public_html/primer-drupal/web) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(VARIANTE B. SUBIDA MANUAL CONTROLADA) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Si no hay SSH:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* comprimir el proyecto sin vendor si Composer correra en servidor) Tj
+0 -15 Td
+(* o subir una version ya preparada) Tj
+0 -15 Td
+(* extraer archivos en la carpeta del subdominio) Tj
+0 -15 Td
+(* asegurar que el dominio siga apuntando a web/) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Esta variante funciona, pero es menos segura y menos repetible.) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PASO 5. CONFIGURAR SETTINGS.PHP) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(En produccion necesitaremos:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* conexion a la base de datos) Tj
+0 -15 Td
+(* hash salt) Tj
+0 -15 Td
+(* configuraciones especificas del ambiente si aplican) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Nunca se deben subir credenciales reales al repositorio.) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PASO 6. INSTALAR DEPENDENCIAS Y AJUSTAR PERMISOS) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Si el servidor permite Composer:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    composer install --no-dev --optimize-autoloader) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Revisar permisos de:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* web/sites/default/files) Tj
+0 -15 Td
+(* web/sites/default/settings.php) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PASO 7. INSTALAR EL SITIO O CONECTAR LA BASE EXISTENTE) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Length 1749 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+(Si el sitio es nuevo:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* usar el instalador web de Drupal) Tj
+0 -15 Td
+(* o importar una base existente) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Si el sitio ya existe:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* importar base de datos) Tj
+0 -15 Td
+(* confirmar acceso al panel) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PASO 8. VALIDAR ANTES DE ABRIR AL PUBLICO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Checklist:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* el dominio carga) Tj
+0 -15 Td
+(* no hay errores PHP fatales) Tj
+0 -15 Td
+(* la pagina principal responde) Tj
+0 -15 Td
+(* login administrativo funciona) Tj
+0 -15 Td
+(* formularios funcionan) Tj
+0 -15 Td
+(* archivos se pueden subir) Tj
+0 -15 Td
+(* cron y correos basicos se revisan) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(FLUJO DE ACTUALIZACION EN ADELANTE) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Para todos los siguientes cambios:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(1. Cambiamos localmente.) Tj
+0 -15 Td
+(2. Probamos localmente.) Tj
+0 -15 Td
+(3. Guardamos en Git.) Tj
+0 -15 Td
+(4. Subimos a GitHub.) Tj
+0 -15 Td
+(5. Desplegamos desde el repositorio o desde un paquete controlado.) Tj
+0 -15 Td
+(6. Validamos en el servidor.) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(REGLAS DE SEGURIDAD QUE VAMOS A MANTENER) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(* no editar archivos criticos directo en produccion salvo emergencia real) Tj
+0 -15 Td
+(* no subir credenciales a GitHub) Tj
+0 -15 Td
+(* no subir files, cache o compilados temporales al repo) Tj
+0 -15 Td
+(* no desplegar sin revisar git status) Tj
+0 -15 Td
+(* no desplegar cambios no probados) Tj
+0 -15 Td
+(* preferir SSH y git pull o git clone sobre arrastrar archivos manualmente) Tj
+0 -15 Td
+(* mantener copia de la base de datos antes de cambios delicados) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Length 1210 >>
+stream
+BT
+/F1 11 Tf
+54 738 Td
+() Tj
+0 -15 Td
+(COMANDOS UTILES DE REFERENCIA) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(LOCAL) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    ddev start) Tj
+0 -15 Td
+(    ddev exec drush status) Tj
+0 -15 Td
+(    ddev exec drush cr) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(GIT) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    git status) Tj
+0 -15 Td
+(    git add .) Tj
+0 -15 Td
+(    git commit -m "Mensaje") Tj
+0 -15 Td
+(    git push) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(PRODUCCION) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(    composer install --no-dev --optimize-autoloader) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(SIGUIENTE PASO PARA ESTE PROYECTO) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Para primer-drupal.josera.com.mx, el siguiente paso operativo es confirmar:) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(1. Document Root exacto del subdominio.) Tj
+0 -15 Td
+(2. Si cPanel tiene SSH Access o Terminal.) Tj
+0 -15 Td
+(3. La version de PHP disponible para ese subdominio.) Tj
+0 -15 Td
+(4. Los datos de la base de datos de pruebas.) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(Con eso, seguimos con la conexion a GitHub y luego con el despliegue.) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 4 0 R >>
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 5 0 R >>
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 6 0 R >>
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 7 0 R >>
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 8 0 R >>
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 9 0 R >>
+endobj
+17 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+xref
+0 18
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000185 00000 n 
+0000002348 00000 n 
+0000003882 00000 n 
+0000005417 00000 n 
+0000006889 00000 n 
+0000008496 00000 n 
+0000010297 00000 n 
+0000011559 00000 n 
+0000011686 00000 n 
+0000011813 00000 n 
+0000011940 00000 n 
+0000012067 00000 n 
+0000012194 00000 n 
+0000012321 00000 n 
+0000012448 00000 n 
+trailer
+<< /Size 18 /Root 17 0 R >>
+startxref
+12498
+%%EOF

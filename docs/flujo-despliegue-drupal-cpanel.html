@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Flujo seguro para proyectos Drupal con GitHub, VS Code y cPanel</title>
+  <style>
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      color: #1f2937;
+      line-height: 1.5;
+      margin: 48px;
+      font-size: 12pt;
+    }
+    h1, h2, h3, h4 {
+      color: #111827;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 22pt;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+    }
+    h2 {
+      font-size: 16pt;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 4px;
+    }
+    h3 {
+      font-size: 13pt;
+    }
+    code, pre {
+      font-family: Menlo, Monaco, monospace;
+    }
+    code {
+      background: #f3f4f6;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    pre {
+      background: #f3f4f6;
+      padding: 12px;
+      border-radius: 8px;
+      overflow: hidden;
+      white-space: pre-wrap;
+    }
+    ul, ol {
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+    .note {
+      background: #eff6ff;
+      border-left: 4px solid #2563eb;
+      padding: 12px;
+      margin: 16px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Flujo seguro para proyectos Drupal con GitHub, VS Code y cPanel</h1>
+  <p>Este documento define el flujo que vamos a usar de aqui en adelante para manejar proyectos Drupal de forma consistente y segura.</p>
+
+  <h2>Objetivo</h2>
+  <ul>
+    <li>trabajar localmente con Docker o DDEV</li>
+    <li>versionar el proyecto con Git</li>
+    <li>respaldar el codigo en GitHub</li>
+    <li>desplegar de forma controlada a un subdominio o dominio en cPanel</li>
+    <li>reducir errores por archivos subidos a mano o cambios no rastreados</li>
+  </ul>
+
+  <h2>Estandar que vamos a seguir siempre</h2>
+  <ol>
+    <li>El proyecto vive en local y se desarrolla desde VS Code.</li>
+    <li>Todo cambio pasa por Git antes de salir del equipo.</li>
+    <li>El repositorio remoto principal vive en GitHub.</li>
+    <li>Produccion nunca se modifica a mano si el cambio puede hacerse desde Git.</li>
+    <li>El document root del dominio o subdominio debe apuntar al directorio <code>web/</code> del proyecto.</li>
+    <li>La base de datos, variables sensibles y archivos subidos no se guardan en Git.</li>
+    <li>Antes de desplegar, validamos Composer, configuracion y version de PHP.</li>
+  </ol>
+
+  <h2>Estructura recomendada para Drupal</h2>
+  <p>Este proyecto usa la estructura <code>drupal/recommended-project</code>, asi que:</p>
+  <ul>
+    <li>la raiz del proyecto contiene <code>composer.json</code></li>
+    <li>el codigo publico vive en <code>web/</code></li>
+    <li>el subdominio en cPanel debe apuntar a algo como <code>public_html/primer-drupal/web</code></li>
+  </ul>
+
+  <h2>Que necesito para conectar un proyecto nuevo</h2>
+  <ol>
+    <li>Nombre del proyecto.</li>
+    <li>URL del repositorio de GitHub, o confirmacion de que lo crearemos.</li>
+    <li>Dominio o subdominio destino.</li>
+    <li>Document Root del dominio en cPanel.</li>
+    <li>Version de PHP disponible en cPanel.</li>
+    <li>Confirmacion de si el hosting tiene <code>SSH Access</code> o <code>Terminal</code>.</li>
+    <li>Datos de la base de datos: nombre, usuario, password y host si no es <code>localhost</code>.</li>
+  </ol>
+
+  <h2>Flujo de trabajo local</h2>
+  <h3>1. Preparar el proyecto</h3>
+  <p>Verificar <code>composer.json</code>, <code>composer.lock</code>, <code>.gitignore</code> y la configuracion local de Docker o DDEV.</p>
+
+  <h3>2. Probar en local</h3>
+  <ul>
+    <li>el sitio debe levantar</li>
+    <li>Drupal debe cargar correctamente</li>
+    <li>modulos y dependencias deben instalar sin error</li>
+    <li>cualquier cambio importante debe probarse localmente</li>
+  </ul>
+
+  <h3>3. Guardar cambios con Git</h3>
+  <pre>git status
+git add .
+git commit -m "Describe el cambio"</pre>
+
+  <h2>Flujo recomendado con GitHub</h2>
+  <h3>1. Crear el repositorio remoto</h3>
+  <p>Crear un repositorio en GitHub con un nombre claro, por ejemplo <code>primer-drupal</code>.</p>
+
+  <h3>2. Conectar el proyecto local</h3>
+  <pre>git init
+git branch -M main
+git remote add origin git@github.com:TU_USUARIO/TU_REPO.git
+git add .
+git commit -m "Initial project setup"
+git push -u origin main</pre>
+
+  <h3>3. Regla de trabajo</h3>
+  <ul>
+    <li><code>main</code> representa el estado desplegable</li>
+    <li>cambios grandes idealmente van en ramas separadas</li>
+    <li>antes de desplegar, <code>main</code> debe estar limpio y probado</li>
+  </ul>
+
+  <h2>Flujo seguro de despliegue a cPanel</h2>
+  <h3>Opcion recomendada: cPanel con Terminal o SSH</h3>
+  <p>Esta es la opcion que prefiero para todos los proyectos porque permite repetir el proceso y dejar menos cosas manuales.</p>
+
+  <h3>Paso 1. Crear el subdominio</h3>
+  <ul>
+    <li>crear el subdominio</li>
+    <li>confirmar el <code>Document Root</code></li>
+    <li>para este tipo de Drupal, el <code>Document Root</code> debe terminar en <code>web</code></li>
+  </ul>
+  <p>Ejemplo: <code>public_html/primer-drupal/web</code></p>
+
+  <h3>Paso 2. Configurar la version de PHP</h3>
+  <ul>
+    <li>usar <code>PHP 8.4</code> si esta disponible</li>
+    <li>si no, usar <code>PHP 8.3</code></li>
+  </ul>
+
+  <h3>Paso 3. Crear la base de datos</h3>
+  <ul>
+    <li>crear base de datos</li>
+    <li>crear usuario</li>
+    <li>asignar todos los privilegios</li>
+    <li>guardar los datos en un lugar seguro</li>
+  </ul>
+
+  <h3>Paso 4. Subir o clonar el proyecto</h3>
+  <p>Hay dos variantes.</p>
+  <h4>Variante A. Git en servidor</h4>
+  <pre>cd ~
+git clone URL_DEL_REPO public_html/primer-drupal
+cd public_html/primer-drupal
+composer install --no-dev --optimize-autoloader</pre>
+  <p>Como este proyecto expone <code>web/</code>, el dominio debe apuntar a <code>public_html/primer-drupal/web</code>.</p>
+
+  <h4>Variante B. Subida manual controlada</h4>
+  <ul>
+    <li>comprimir el proyecto sin <code>vendor</code> si Composer correra en servidor</li>
+    <li>o subir una version ya preparada</li>
+    <li>extraer archivos en la carpeta del subdominio</li>
+    <li>asegurar que el dominio siga apuntando a <code>web/</code></li>
+  </ul>
+  <p>Esta variante funciona, pero es menos segura y menos repetible.</p>
+
+  <h3>Paso 5. Configurar <code>settings.php</code></h3>
+  <ul>
+    <li>conexion a la base de datos</li>
+    <li>hash salt</li>
+    <li>configuraciones especificas del ambiente si aplican</li>
+  </ul>
+  <p>Nunca se deben subir credenciales reales al repositorio.</p>
+
+  <h3>Paso 6. Instalar dependencias y ajustar permisos</h3>
+  <pre>composer install --no-dev --optimize-autoloader</pre>
+  <p>Revisar permisos de <code>web/sites/default/files</code> y <code>web/sites/default/settings.php</code>.</p>
+
+  <h3>Paso 7. Instalar el sitio o conectar la base existente</h3>
+  <ul>
+    <li>si el sitio es nuevo, usar el instalador web de Drupal o importar una base existente</li>
+    <li>si el sitio ya existe, importar base de datos y confirmar acceso al panel</li>
+  </ul>
+
+  <h3>Paso 8. Validar antes de abrir al publico</h3>
+  <ul>
+    <li>el dominio carga</li>
+    <li>no hay errores PHP fatales</li>
+    <li>la pagina principal responde</li>
+    <li>login administrativo funciona</li>
+    <li>formularios funcionan</li>
+    <li>archivos se pueden subir</li>
+    <li>cron y correos basicos se revisan</li>
+  </ul>
+
+  <h2>Flujo de actualizacion en adelante</h2>
+  <ol>
+    <li>Cambiamos localmente.</li>
+    <li>Probamos localmente.</li>
+    <li>Guardamos en Git.</li>
+    <li>Subimos a GitHub.</li>
+    <li>Desplegamos desde el repositorio o desde un paquete controlado.</li>
+    <li>Validamos en el servidor.</li>
+  </ol>
+
+  <h2>Reglas de seguridad que vamos a mantener</h2>
+  <ul>
+    <li>no editar archivos criticos directo en produccion salvo emergencia real</li>
+    <li>no subir credenciales a GitHub</li>
+    <li>no subir <code>files</code>, cache o compilados temporales al repo</li>
+    <li>no desplegar sin revisar <code>git status</code></li>
+    <li>no desplegar cambios no probados</li>
+    <li>preferir <code>SSH</code> y <code>git pull</code> o <code>git clone</code> sobre arrastrar archivos manualmente</li>
+    <li>mantener copia de la base de datos antes de cambios delicados</li>
+  </ul>
+
+  <h2>Comandos utiles de referencia</h2>
+  <h3>Local</h3>
+  <pre>ddev start
+ddev exec drush status
+ddev exec drush cr</pre>
+
+  <h3>Git</h3>
+  <pre>git status
+git add .
+git commit -m "Mensaje"
+git push</pre>
+
+  <h3>Produccion</h3>
+  <pre>composer install --no-dev --optimize-autoloader</pre>
+
+  <h2>Siguiente paso para este proyecto</h2>
+  <ol>
+    <li><code>Document Root</code> exacto del subdominio.</li>
+    <li>Si cPanel tiene <code>SSH Access</code> o <code>Terminal</code>.</li>
+    <li>La version de PHP disponible para ese subdominio.</li>
+    <li>Los datos de la base de datos de pruebas.</li>
+  </ol>
+
+  <div class="note">
+    Con eso, seguimos con la conexion a GitHub y luego con el despliegue.
+  </div>
+</body>
+</html>
