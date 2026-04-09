@@ -6,8 +6,12 @@
       var selector = [
         'input[data-drupal-selector*="whatsapp-phone"]',
         'input[data-drupal-selector*="phone-whatsapp"]',
+        'input[name="whatsapp_phone"]',
+        'input[name="phone_whatsapp"]',
         'input[name*="[whatsapp_phone]"]',
-        'input[name*="[phone_whatsapp]"]'
+        'input[name*="[phone_whatsapp]"]',
+        'input[type="tel"][data-drupal-selector*="whatsapp"]',
+        'input[type="text"][data-drupal-selector*="whatsapp"]'
       ].join(', ');
       once('twilioPhone', selector, context).forEach(function (element) {
         if (!window.intlTelInput) {
