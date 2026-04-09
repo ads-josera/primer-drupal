@@ -3,7 +3,12 @@
 (function ($, Drupal, once) {
   Drupal.behaviors.twilioPhone = {
     attach: function (context) {
-      var selector = 'input[data-drupal-selector^="edit-phone-whatsapp"], input[data-drupal-selector^="edit-whatsapp-phone"]';
+      var selector = [
+        'input[data-drupal-selector*="whatsapp-phone"]',
+        'input[data-drupal-selector*="phone-whatsapp"]',
+        'input[name*="[whatsapp_phone]"]',
+        'input[name*="[phone_whatsapp]"]'
+      ].join(', ');
       once('twilioPhone', selector, context).forEach(function (element) {
         if (!window.intlTelInput) {
           return;
@@ -13,9 +18,7 @@
           initialCountry: 'mx',
           preferredCountries: ['mx', 'us', 'ca'],
           strictMode: true,
-          loadUtils: function () {
-            return import('/libraries/jquery.intl-tel-input/build/js/utils.js');
-          }
+          utilsScript: '/libraries/jquery.intl-tel-input/build/js/utils.js'
         });
 
         var syncValue = function () {
