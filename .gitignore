@@ -15,6 +15,9 @@
 !/web/libraries/jquery.intl-tel-input/**
 
 /web/sites/*/files/
+!/web/sites/default/files/
+!/web/sites/default/files/sync/
+!/web/sites/default/files/sync/**
 /web/sites/simpletest/
 
 /web/sites/*/settings.local.php
