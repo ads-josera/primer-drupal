@@ -1,0 +1,7 @@
+twilio.settings_form:
+  path: '/admin/config/system/twilio'
+  defaults:
+    _title: 'WhatsApp Twilio'
+    _form: 'Drupal\twilio\Form\SettingsForm'
+  requirements:
+    _permission: 'administer twilio configuration'

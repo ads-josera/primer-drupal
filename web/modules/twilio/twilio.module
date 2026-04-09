@@ -1,0 +1,87 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\webform\WebformSubmissionInterface;
+
+/**
+ * Implements hook_webform_submission_form_alter().
+ */
+function twilio_webform_submission_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  $config = \Drupal::config('twilio.settings');
+  $webform_id = $form['#webform_id'] ?? '';
+  $target_webform_id = $config->get('whatsapp_webform_id') ?: 'constancia';
+  $recipient_field = $config->get('whatsapp_recipient_field') ?: 'whatsapp_phone';
+
+  if ($webform_id !== $target_webform_id) {
+    return;
+  }
+
+  if (in_array($recipient_field, ['phone_whatsapp', 'whatsapp_phone'], TRUE)) {
+    $form['#attached']['library'][] = 'twilio/phone_whatsapp';
+  }
+
+  if (!$config->get('whatsapp_enabled') || $recipient_field !== 'whatsapp_phone') {
+    return;
+  }
+
+  $element = [
+    '#type' => 'textfield',
+    '#title' => t('WhatsApp del destinatario'),
+    '#description' => t('Opcional. Si se captura, tambien se enviara una notificacion por WhatsApp.'),
+    '#maxlength' => 32,
+    '#parents' => ['whatsapp_phone'],
+    '#attributes' => [
+      'inputmode' => 'tel',
+      'autocomplete' => 'tel',
+    ],
+    '#weight' => 99,
+  ];
+
+  $form_object = $form_state->getFormObject();
+  if ($form_object && method_exists($form_object, 'getEntity')) {
+    $submission = $form_object->getEntity();
+    if ($submission instanceof WebformSubmissionInterface) {
+      $element['#default_value'] = $submission->getElementData('whatsapp_phone') ?? '';
+    }
+  }
+
+  if (isset($form['elements']['solicitante_tres']) && is_array($form['elements']['solicitante_tres'])) {
+    $form['elements']['solicitante_tres']['whatsapp_phone'] = $element;
+  }
+  else {
+    $form['elements']['whatsapp_phone'] = $element;
+  }
+
+  $form['#submit'][] = 'twilio_webform_submission_form_submit';
+}
+
+/**
+ * Stores the optional WhatsApp recipient on the submission entity.
+ */
+function twilio_webform_submission_form_submit(array &$form, FormStateInterface $form_state) {
+  $form_object = $form_state->getFormObject();
+  if (!$form_object || !method_exists($form_object, 'getEntity')) {
+    return;
+  }
+
+  $submission = $form_object->getEntity();
+  if (!$submission instanceof WebformSubmissionInterface) {
+    return;
+  }
+
+  $config = \Drupal::config('twilio.settings');
+  $target_webform_id = $config->get('whatsapp_webform_id') ?: 'constancia';
+  $recipient_field = $config->get('whatsapp_recipient_field') ?: 'whatsapp_phone';
+  if ($submission->getWebform()->id() !== $target_webform_id || $recipient_field !== 'whatsapp_phone') {
+    return;
+  }
+
+  $submission->setElementData('whatsapp_phone', trim((string) $form_state->getValue('whatsapp_phone')));
+}
+
+/**
+ * Implements hook_webform_submission_insert().
+ */
+function twilio_webform_submission_insert(WebformSubmissionInterface $submission) {
+  \Drupal::service('twilio.whatsapp_helper')->sendSubmissionNotification($submission);
+}

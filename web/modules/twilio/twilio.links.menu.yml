@@ -1,0 +1,6 @@
+twilio.settings_form:
+  title: 'WhatsApp Twilio'
+  description: 'Configuracion de notificaciones por WhatsApp con Twilio.'
+  parent: system.admin_config_system
+  route_name: twilio.settings_form
+  weight: 20

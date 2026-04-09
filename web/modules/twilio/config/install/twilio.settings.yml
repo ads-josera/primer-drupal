@@ -1,0 +1,8 @@
+whatsapp_enabled: false
+whatsapp_webform_id: constancia
+whatsapp_recipient_field: whatsapp_phone
+twilio_account_sid: ''
+twilio_auth_token: ''
+twilio_whatsapp_from: ''
+twilio_content_template_sid: ''
+whatsapp_mappings: {  }

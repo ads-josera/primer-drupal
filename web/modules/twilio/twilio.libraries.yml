@@ -1,0 +1,8 @@
+phone_whatsapp:
+  js:
+    js/twilio_phone.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
+    - webform/libraries.jquery.intl-tel-input

@@ -1,0 +1,37 @@
+twilio.settings:
+  type: config_object
+  label: 'Twilio settings'
+  mapping:
+    whatsapp_enabled:
+      type: boolean
+      label: 'Enable WhatsApp notifications'
+    whatsapp_webform_id:
+      type: string
+      label: 'WhatsApp target webform'
+    whatsapp_recipient_field:
+      type: string
+      label: 'WhatsApp recipient field'
+    twilio_account_sid:
+      type: string
+      label: 'Twilio Account SID'
+    twilio_auth_token:
+      type: string
+      label: 'Twilio Auth Token'
+    twilio_whatsapp_from:
+      type: string
+      label: 'Twilio WhatsApp sender'
+    twilio_content_template_sid:
+      type: string
+      label: 'Twilio content template SID'
+    whatsapp_mappings:
+      type: sequence
+      label: 'WhatsApp template mappings'
+      sequence:
+        type: mapping
+        mapping:
+          field:
+            type: string
+            label: 'Webform field'
+          variable:
+            type: string
+            label: 'Twilio template variable'

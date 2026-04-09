@@ -1,0 +1,7 @@
+name: 'Twilio'
+type: module
+description: 'WhatsApp notifications using Twilio.'
+package: JG Mylard
+core_version_requirement: ^10 || ^11
+dependencies:
+  - webform:webform

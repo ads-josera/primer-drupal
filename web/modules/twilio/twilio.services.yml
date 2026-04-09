@@ -1,0 +1,7 @@
+services:
+  twilio.whatsapp_helper:
+    class: Drupal\twilio\WhatsAppHelper
+    arguments:
+      - '@config.factory'
+      - '@http_client'
+      - '@logger.factory'

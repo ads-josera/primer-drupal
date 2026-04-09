@@ -1,0 +1,3 @@
+administer twilio configuration:
+  title: 'Administer Twilio configuration'
+  restrict access: true
