@@ -10,6 +10,9 @@
 /web/profiles/contrib/
 /web/themes/contrib/
 /web/libraries/
+!/web/libraries/
+!/web/libraries/jquery.intl-tel-input/
+!/web/libraries/jquery.intl-tel-input/**
 
 /web/sites/*/files/
 /web/sites/simpletest/

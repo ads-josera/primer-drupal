@@ -14,7 +14,7 @@
           preferredCountries: ['mx', 'us', 'ca'],
           strictMode: true,
           loadUtils: function () {
-            return import('https://cdn.jsdelivr.net/npm/intl-tel-input/build/js/utils.js');
+            return import('/libraries/jquery.intl-tel-input/build/js/utils.js');
           }
         });
 

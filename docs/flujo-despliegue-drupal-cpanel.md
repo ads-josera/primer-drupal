@@ -296,7 +296,7 @@ source ~/.bashrc
 ```bash
 cd /home/josera/primer-drupal.josera.com.mx
 git clone https://github.com/ads-josera/primer-drupal.git temp-repo
-rsync -av temp-repo/ . --exclude .git
+rsync -av temp-repo/ . --exclude .git --exclude web/sites/default/settings.php
 rm -rf temp-repo
 php84 /usr/local/bin/composer install --no-dev --optimize-autoloader
 mkdir -p web/sites/default/files
@@ -309,6 +309,12 @@ Despues:
 - importar base de datos
 - configurar `web/sites/default/settings.php`
 - ejecutar `drush84 cr`
+
+Regla importante:
+
+- cuando usemos `rsync` para desplegar, no debemos sobrescribir `web/sites/default/settings.php`
+- tampoco debemos pisar `web/sites/default/files/`
+- los secretos y configuraciones del servidor se mantienen fuera de Git y fuera del `rsync` agresivo
 
 ### Actualizacion normal de codigo
 
