@@ -4,6 +4,9 @@
   Drupal.behaviors.twilioPhone = {
     attach: function (context) {
       var selector = [
+        'input[data-drupal-selector*="telefono"]',
+        'input[name="telefono"]',
+        'input[name*="[telefono]"]',
         'input[data-drupal-selector*="whatsapp-phone"]',
         'input[data-drupal-selector*="phone-whatsapp"]',
         'input[name="whatsapp_phone"]',
