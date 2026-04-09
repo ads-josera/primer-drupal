@@ -12,6 +12,10 @@ function twilio_webform_submission_form_alter(array &$form, FormStateInterface $
   $target_webform_id = $config->get('whatsapp_webform_id') ?: 'constancia';
   $recipient_field = $config->get('whatsapp_recipient_field') ?: 'whatsapp_phone';
 
+  if (twilio_form_has_key($form['elements'] ?? $form, 'telefono')) {
+    $form['#attached']['library'][] = 'twilio/phone_whatsapp';
+  }
+
   if ($webform_id !== $target_webform_id) {
     return;
   }
@@ -84,4 +88,21 @@ function twilio_webform_submission_form_submit(array &$form, FormStateInterface 
  */
 function twilio_webform_submission_insert(WebformSubmissionInterface $submission) {
   \Drupal::service('twilio.whatsapp_helper')->sendSubmissionNotification($submission);
+}
+
+/**
+ * Checks whether a nested form array contains a specific element key.
+ */
+function twilio_form_has_key(array $elements, string $target_key): bool {
+  foreach ($elements as $key => $value) {
+    if ((string) $key === $target_key) {
+      return TRUE;
+    }
+
+    if (is_array($value) && twilio_form_has_key($value, $target_key)) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
