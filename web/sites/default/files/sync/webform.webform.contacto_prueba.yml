@@ -25,6 +25,9 @@ elements: |-
     '#type': textarea
     '#title': Mensaje
     '#required': true
+  telefono:
+    '#type': textfield
+    '#title': telefono
 css: ''
 javascript: ''
 settings:

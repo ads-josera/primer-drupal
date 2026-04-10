@@ -1,7 +1,7 @@
 _core:
   default_config_hash: O7QiyyRNEmru7UrgQ90vASCPUEdoJO3kW-n3r9feiFM
-whatsapp_enabled: false
-whatsapp_webform_id: constancia
+whatsapp_enabled: true
+whatsapp_webform_id: contacto_prueba
 whatsapp_recipient_field: whatsapp_phone
 twilio_account_sid: ''
 twilio_auth_token: ''
